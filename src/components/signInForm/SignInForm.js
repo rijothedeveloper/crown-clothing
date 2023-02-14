@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getRedirectResult } from "firebase/auth";
 import {
   auth,
@@ -11,6 +11,7 @@ import FormInput from "../formInput/formInput";
 import Button from "../button/Button";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "./SignInForm.styles.scss";
+import { UserConext } from "../../contexts/user.context";
 
 const defaultFormFields = {
   email: "",
@@ -23,8 +24,8 @@ const SignInForm = () => {
     setFormFields({ ...formFields, [event.target.name]: event.target.value });
   };
   const loginWithGoogle = async () => {
-    const response = await signInWithGooglepopup();
-    await createUserDocumentFromAuth(response.user);
+    await signInWithGooglepopup();
+    // await createUserDocumentFromAuth(response.user);
   };
 
   const loginEmailUser = async (event) => {
@@ -35,7 +36,6 @@ const SignInForm = () => {
         formFields.email,
         formFields.password
       );
-      console.log(userCredentials.user);
     } catch (error) {
       console.log(error.message);
       switch (error.code) {
