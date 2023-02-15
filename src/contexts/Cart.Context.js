@@ -1,15 +1,18 @@
 import { createContext, useState } from "react";
 
 export const CartContext = createContext({
-  products: [],
+  cartItems: [],
+  setCartItems: () => {},
   isCartOpen: false,
+  setCartOpen: () => {},
 });
 
 export const CartProvider = ({ children }) => {
-  const [cartValues, setCartValues] = useState({
-    products: [],
-    isCartOpen: false,
+  const [cartItems, setCartItems] = useState({
+    cartItems: [],
+    setCartItems: () => {},
   });
-  const value = { cartValues, setCartValues };
+  const [isCartOpen, setCartOpen] = useState(false);
+  const value = { cartItems, setCartItems, isCartOpen, setCartOpen };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
