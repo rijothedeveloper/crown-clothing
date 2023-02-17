@@ -8,7 +8,7 @@ import {
   signInWithGoogleRedirect,
 } from "../../utils/firebase/firebase";
 import FormInput from "../formInput/formInput";
-import Button from "../button/Button";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/Button";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "./SignInForm.styles.scss";
 import { UserConext } from "../../contexts/user.context";
@@ -89,7 +89,11 @@ const SignInForm = () => {
           <Button type="submit" onClick={loginEmailUser}>
             SIGN IN
           </Button>
-          <Button type="button" onClick={loginWithGoogle} buttonType="google">
+          <Button
+            type="button"
+            onClick={loginWithGoogle}
+            buttonType={BUTTON_TYPE_CLASSES.google}
+          >
             GOOGLE SIGN IN
           </Button>
         </div>
