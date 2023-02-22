@@ -35,6 +35,22 @@ const removeCartItem = (cartItems, productToRemove) => {
   }
 };
 
+const getCartCount = (newCartItems) => {
+  const newCartCount = newCartItems.reduce(
+    (total, cartItem) => total + cartItem.quantity,
+    0
+  );
+  return newCartCount;
+};
+
+const getCartTotal = (newCartItems) => {
+  const newTotal = newCartItems.reduce(
+    (total, cartItem) => total + cartItem.price * cartItem.quantity,
+    0
+  );
+  return newTotal;
+};
+
 export const setCartOpen = (open) => ({
   type: CART_REDUCER_TYPES.SET_CART_OPEN,
   payload: open,
@@ -42,23 +58,42 @@ export const setCartOpen = (open) => ({
 
 export const addItemToCart = (cartItems, productToAdd) => {
   const newCartItems = addCartItem(cartItems, productToAdd);
+  const newTotal = getCartTotal(newCartItems);
+  const newCartCount = getCartCount(newCartItems);
   return {
     type: CART_REDUCER_TYPES.SET_CART_ITEMS,
-    payload: newCartItems,
+    payload: {
+      cartItems: newCartItems,
+      totalQuantity: newCartCount,
+      cartTotal: newTotal,
+    },
   };
 };
+
 export const removeItemFromCart = (cartItems, productToRemove) => {
   const newCartItems = removeCartItem(cartItems, productToRemove);
+  const newTotal = getCartTotal(newCartItems);
+  const newCartCount = getCartCount(newCartItems);
   return {
     type: CART_REDUCER_TYPES.SET_CART_ITEMS,
-    payload: newCartItems,
+    payload: {
+      cartItems: newCartItems,
+      totalQuantity: newCartCount,
+      cartTotal: newTotal,
+    },
   };
 };
 
 export const removeItem = (cartItems, product) => {
-  const filterItems = cartItems.filter((item) => item.id !== product.id);
+  const newCartItems = cartItems.filter((item) => item.id !== product.id);
+  const newTotal = getCartTotal(newCartItems);
+  const newCartCount = getCartCount(newCartItems);
   return {
     type: CART_REDUCER_TYPES.SET_CART_ITEMS,
-    payload: filterItems,
+    payload: {
+      cartItems: newCartItems,
+      totalQuantity: newCartCount,
+      cartTotal: newTotal,
+    },
   };
 };

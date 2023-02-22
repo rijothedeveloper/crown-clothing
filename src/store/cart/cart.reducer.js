@@ -13,9 +13,9 @@ export const CartReducer = (state = CART_INITIAL_STATE, action = {}) => {
     case CART_REDUCER_TYPES.SET_CART_ITEMS:
       return {
         ...state,
-        cartItems: payload,
-        // totalQuantity: payload.totalQuantity,
-        // cartTotal: payload.cartTotal,
+        cartItems: payload.cartItems,
+        totalQuantity: payload.totalQuantity,
+        cartTotal: payload.cartTotal,
       };
     case CART_REDUCER_TYPES.SET_CART_OPEN:
       return {
