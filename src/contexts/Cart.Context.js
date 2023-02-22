@@ -76,16 +76,6 @@ export const CartProvider = ({ children }) => {
           ...state,
           isCartOpen: payload,
         };
-      // case CART_REDUCER_TYPES.SET_TOTAL_QUANTITY:
-      //   return {
-      //     ...state,
-      //     totalQuantity: payload,
-      //   };
-      // case CART_REDUCER_TYPES.SET_CART_TOTAL:
-      //   return {
-      //     ...state,
-      //     cartTotal: payload,
-      //   };
       default:
         throw new Error(`unhandled type ${type} in cartReducer`);
     }
