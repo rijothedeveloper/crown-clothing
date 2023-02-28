@@ -13,7 +13,6 @@ import {
 
 export const fetchCategoriesStart = () => ({
   type: FETCH_CATEGORIES_START,
-  payload: null,
 });
 
 export const fetchCategoriesSuccess = (categoriesMap) => ({
@@ -27,7 +26,7 @@ export const fetchCategoriesFailed = (error) => ({
 });
 
 export const fetchCategoriesAsync = () => async (dispatch) => {
-  dispatch(fetchCategoriesStart);
+  dispatch(fetchCategoriesStart());
   try {
     const categoryMap = await getCategoriesAndDocuments();
     dispatch(fetchCategoriesSuccess(categoryMap));
