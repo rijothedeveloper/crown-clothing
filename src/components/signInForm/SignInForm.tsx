@@ -1,4 +1,11 @@
-import { useEffect, useState, useContext } from "react";
+import {
+  useEffect,
+  useState,
+  useContext,
+  FormEvent,
+  ChangeEvent,
+  ErrorInfo,
+} from "react";
 import { getRedirectResult } from "firebase/auth";
 import {
   auth,
@@ -20,7 +27,7 @@ const defaultFormFields = {
 
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const handleFormChange = (event) => {
+  const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormFields({ ...formFields, [event.target.name]: event.target.value });
   };
   const loginWithGoogle = async () => {
@@ -28,7 +35,7 @@ const SignInForm = () => {
     // await createUserDocumentFromAuth(response.user);
   };
 
-  const loginEmailUser = async (event) => {
+  const loginEmailUser = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     resetForm();
     try {
@@ -36,7 +43,7 @@ const SignInForm = () => {
         formFields.email,
         formFields.password
       );
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message);
       switch (error.code) {
         case "auth/wrong-password":
@@ -86,7 +93,7 @@ const SignInForm = () => {
           onChange={handleFormChange}
         />
         <div className="button-group">
-          <Button type="submit" onClick={loginEmailUser}>
+          <Button type="submit" onClick={() => loginEmailUser}>
             SIGN IN
           </Button>
           <Button

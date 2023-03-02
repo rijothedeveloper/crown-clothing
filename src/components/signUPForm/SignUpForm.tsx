@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import "./SignUpForm.styles.scss";
 import {
   createAuthUserWithEmailAndPassword,
@@ -7,6 +7,7 @@ import {
 import FormInput from "../formInput/formInput";
 import Button from "../button/Button";
 import { UserConext } from "../../contexts/user.context";
+import { UserCredential } from "firebase/auth";
 
 const defaultFormFields = {
   displayName: "",
@@ -17,12 +18,12 @@ const defaultFormFields = {
 
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const handleForm = (event) => {
+  const handleForm = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("here handleSubmit");
     if (formFields.password !== formFields.confirmPassword) {
@@ -30,16 +31,17 @@ const SignUpForm = () => {
       return;
     }
     try {
-      const userCredential = await createAuthUserWithEmailAndPassword(
-        formFields.email,
-        formFields.password
-      );
-      const user = userCredential.user;
+      const userCredential: UserCredential | undefined =
+        await createAuthUserWithEmailAndPassword(
+          formFields.email,
+          formFields.password
+        );
+      const user = userCredential?.user;
       const userDocRef = createUserDocumentFromAuth(user, {
         displayName: formFields.displayName,
       });
       resetForm();
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message);
     }
   };
